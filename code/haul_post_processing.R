@@ -68,8 +68,8 @@ edit_sgt <- sqlQuery(channel, query_command)
 # pull mean height data after CALPYSO done
 
 # write_csv(edit_haul, path = here("edit_haul.csv"))
-# write_csv(edit_sgp, path = here("edit_sgp.csv"))
-# write_csv(edit_sgt, path = here("edit_sgt.csv"))
+edit_sgp <- read_csv(here("input", "test_edit_sgp.csv"))
+edit_sgt <- read_csv(here("input", "test_edit_sgt.csv"))
 
 # data cleaning -----------------------------------------------------------
 
@@ -286,7 +286,7 @@ for(h in unique(good_ping_hauls$haul))
 sor_test <- good_ping_hauls %>% dplyr::filter(vessel == vessel[[1]], haul %in% unique(good_ping_hauls$haul)[1:10])
 
 start_time <- Sys.time()
-sor_vessel1 <- sor_test %>% 
+sor_vessel1 <- good_ping_hauls %>% 
   group_by(vessel, haul) %>% 
   # as.data.frame() %>% 
   dplyr::group_map(~sequentialOR(data = .x, #as.data.frame(good_ping_hauls), 
