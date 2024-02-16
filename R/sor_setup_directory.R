@@ -5,16 +5,16 @@
 #' @param region Survey region as a 1L character vector (EBS or NBS)
 #' @param cruise Cruise number as a numeric vector (e.g. 202202)
 #' @param cruise_idnum Cruise ID number as a numeric vector (e.g. 757)
-#' @param vessel vessel ID number as a numeric vector (e.g. 162 for Alaska Knight.
+#' @param vessel vessel ID number as a numeric vector (e.g. 162 for Alaska Knight)
 #' @param survey Survey name prefix to use in filename (e.g. NBS_2022)
 #' @param channel Open RODBC channel. If NULL, function will prompt for user ID.
 #' @param convert_marport_to_netmind Should Marport spread measurements be converted to Netmind spread using trawlmetric::marport_to_netmind()? 
-#' @param skip_save_rds For testing and demo purposes. Should queried data be written to a directory.
+#' @param skip_save_rds For testing and demo purposes. If TRUE, queried data are written to a directory.
 #' @export
 
 
 sor_setup_directory <- function(cruise, cruise_idnum, vessel, region, survey, channel = NULL, width_range = c(10, 22), convert_marport_to_netmind = TRUE, skip_save_rds = FALSE) {
-  
+
   region <- toupper(region)
   
   if(is.null(width_range)) {
@@ -45,7 +45,7 @@ sor_setup_directory <- function(cruise, cruise_idnum, vessel, region, survey, ch
   survey_region <- c('BS', 'BS')[match(region, c("EBS", "NBS"))]
   survey_year <- floor(cruise/100)
   
-  message("setup_sor_directory: Retreiving data from racebase")
+  message("setup_sor_directory: Retrieving data from racebase")
   # Get spread measurements from race_data
   edit_sgp_df <- RODBC::sqlQuery(channel = channel, 
                               query = paste0(" select * from race_data.v_cruises where year = ", 
@@ -106,8 +106,8 @@ sor_setup_directory <- function(cruise, cruise_idnum, vessel, region, survey, ch
                   edit_wire_out, edit_wire_out_units, wire_out_method) %>% 
     dplyr::mutate(cruise = cruise,
                   vessel = vessel,
-                  edit_wire_out_FM = round(if_else(edit_wire_out_units == "FT", edit_wire_out/6, as.numeric(edit_wire_out)),0),
-                  edit_wire_out_units_FM = if_else(edit_wire_out_units == "FT", "FM", "FM")) %>% 
+                  edit_wire_out_FM = round(dplyr::if_else(edit_wire_out_units == "FT", edit_wire_out/6, as.numeric(edit_wire_out)),0),
+                  edit_wire_out_units_FM = dplyr::if_else(edit_wire_out_units == "FT", "FM", "FM")) %>% 
     dplyr::mutate(invscope = 1/edit_wire_out)
   
   edit_hauls_table_raw <- edit_height %>% 
