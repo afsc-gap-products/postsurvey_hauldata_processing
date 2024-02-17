@@ -1,3 +1,4 @@
+# devtools::install_github("sean-rohan-noaa/trawlmetrics")
 library(trawlmetrics)
 
 # 2022 NBS Alaska Knight ---------------------------------------------------------------------------
