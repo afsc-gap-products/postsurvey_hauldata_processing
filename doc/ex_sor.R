@@ -1,3 +1,4 @@
+#install_github("afsc-gap-products/postsurvey_hauldata_processing")
 library(trawlmetrics)
 
 # 2022 NBS Alaska Knight ---------------------------------------------------------------------------
