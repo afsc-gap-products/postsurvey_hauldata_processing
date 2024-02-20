@@ -14,7 +14,7 @@
 
 
 sor_setup_directory <- function(cruise, cruise_idnum, vessel, region, survey, channel = NULL, width_range = c(10, 22), convert_marport_to_netmind = TRUE, skip_save_rds = FALSE) {
-  
+
   region <- toupper(region)
   
   if(is.null(width_range)) {
